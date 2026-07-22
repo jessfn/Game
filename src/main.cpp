@@ -352,6 +352,7 @@ int main() {
 
     void* nativeWindow = glfwGetWin32Window(window);
 
+
     Engine* engine = Engine::create(Engine::Backend::OPENGL);
     SwapChain* swapChain = engine->createSwapChain(nativeWindow);
     Renderer* renderer = engine->createRenderer();
@@ -385,10 +386,9 @@ int main() {
     ao.power = 1.2f;
     view->setAmbientOcclusionOptions(ao);
 
-    MultiSampleAntiAliasingOptions msaa;
-    msaa.enabled = true;
-    msaa.sampleCount = 4;
-    view->setMultiSampleAntiAliasingOptions(msaa);
+    // MSAA deshabilitado a proposito: en GPUs integradas con drivers viejos, combinar
+    // MSAA con SSAO/Bloom puede colgar el driver (TDR de Windows) y se ve como "se queda
+    // trabado en blanco". FXAA por si sola ya suaviza bordes con costo minimo.
     view->setAntiAliasing(View::AntiAliasing::FXAA);
 
     // --- Luz ambiental (cielo) plana, para que las sombras no queden negras ---
