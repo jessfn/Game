@@ -1,0 +1,19 @@
+material {
+    name : "LitPBR",
+    shadingModel : lit,
+    parameters : [
+        { type : float3, name : baseColor },
+        { type : float, name : metallic },
+        { type : float, name : roughness }
+    ],
+    requires : [ uv0 ]
+}
+
+fragment {
+    void material(inout MaterialInputs material) {
+        prepareMaterial(material);
+        material.baseColor.rgb = materialParams.baseColor;
+        material.metallic = materialParams.metallic;
+        material.roughness = materialParams.roughness;
+    }
+}
